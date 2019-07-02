@@ -11,4 +11,9 @@ class Projects extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function project_list()
+    {
+        return $this->hasMany('App\ProjectList', 'project_id', 'id');
+    }
 }

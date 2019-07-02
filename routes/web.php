@@ -17,4 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/create-todo', 'TodoController@show');
-Route::post('/create-todo', 'TodoController@store');
+Route::post('/create-todo', 'TodoController@store')->name('create');
+Route::get('/all-todo','TodoController@showAll')->name('all');
+
+Route::get('/project/{id}', 'TodoController@showList');

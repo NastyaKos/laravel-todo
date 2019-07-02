@@ -25,6 +25,19 @@ class TodoController extends Controller
 
         $project->save();
 
-        return back();
+        return redirect('/all-todo');
+    }
+
+    public function showAll()
+    {
+        $projects = Projects::all();
+
+        return view('all-todo', ['projects' => $projects]);
+    }
+
+    public function showList($id)
+    {
+        $project = Projects::find($id);
+        return view('project', ['project' => $project]);
     }
 }
