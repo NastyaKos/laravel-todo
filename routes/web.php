@@ -21,3 +21,6 @@ Route::post('/create-todo', 'TodoController@store')->name('create');
 Route::get('/all-todo','TodoController@showAll')->name('all');
 
 Route::get('/project/{id}', 'TodoController@showList');
+
+Route::patch('/project/list/save/{id}', 'TodoController@updateList');
+Route::post('/project/list/save/', 'TodoController@storeList');
