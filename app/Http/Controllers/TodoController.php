@@ -53,7 +53,7 @@ class TodoController extends Controller
     public function storeList(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:projects|max:15'
+            'name' => 'required|unique:projects|max:100'
         ]);
         $list = new ProjectList();
         $list->name =  $validatedData['name'];
@@ -61,6 +61,15 @@ class TodoController extends Controller
         $list->project_id =$request->input('project_id') ;
         $list->save();
         return back();
+
+    }
+    public function deleteList(Request $request, $id)
+    {
+
+        $list = ProjectList::find($id);
+        $list->delete();
+        $delList=$request->input('project_id');
+        return redirect('/project/'.$delList);
 
     }
 }

@@ -24,3 +24,4 @@ Route::get('/project/{id}', 'TodoController@showList');
 
 Route::patch('/project/list/save/{id}', 'TodoController@updateList');
 Route::post('/project/list/save/', 'TodoController@storeList');
+Route::delete('/project/list/delete/{id}', 'TodoController@deleteList');
