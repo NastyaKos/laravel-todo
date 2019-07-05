@@ -28,29 +28,37 @@
     </style>
 </head>
 <body>
+
     <form action="/project/list/save/" method="POST">
     @csrf
         <input type="hidden" name="project_id" value="{{ $project->id }}">
         <input type="text" name="name">
         <input type="submit" class="button8">
     </form>
-    @if( sizeof($project->project_list) )
+    @if ($errors->any())
+        <ul>
+            @foreach($errors -> all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+    @if( sizeof($project -> projectList) )
         <div>
-            @foreach( $project->project_list as $list)
+            @foreach( $project -> projectList as $list)
                 <div class="list">
-                    <form action="/project/list/save/{{ $list->id }}" method="POST">
+                    <form action="/project/list/save/{{ $list -> id }}" method="POST">
                     @csrf
                     @method('PATCH')
 
                          <input name='done' type="hidden" value="0" checked>
-                         <input name='done' type="checkbox" value="1" onchange="this.form.submit()" {{ ($list->done == 1) ? 'checked' : '' }}> {{ $list->name }}
+                         <input name='done' type="checkbox" value="1" onchange="this.form.submit()" {{ ($list -> done == 1) ? 'checked' : '' }}> {{ $list -> name }}
 
                     </form>
-                    @if($list->done)
-                    <form action="/project/list/delete/{{ $list->id }}" method="POST">
+                    @if($list -> done)
+                    <form action="/project/list/delete/{{ $list -> id }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <input name="project_id" type="hidden" value="{{ $project->id }}">
+                        <input name="project_id" type="hidden" value="{{ $project -> id }}">
                         <input type="submit" value="X" class="button8">
                     </form>
                     @endif

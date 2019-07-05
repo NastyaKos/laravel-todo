@@ -29,6 +29,13 @@
             <input type="text" name="name" placeholder=" New project">
             <input type="submit"  value="Сохранить" class="button8">
         </form>
+        @if ($errors->any())
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
         <br>
         <a href="/"><button class ="button8">Назад</button></a>
 </body>

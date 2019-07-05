@@ -12,7 +12,7 @@ class Projects extends Model
         'name'
     ];
 
-    public function project_list()
+    public function projectList()
     {
         return $this->hasMany('App\ProjectList', 'project_id', 'id');
     }

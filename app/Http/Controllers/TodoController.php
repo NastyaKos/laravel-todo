@@ -18,48 +18,58 @@ class TodoController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:projects|max:15'
         ]);
-
-
-        $project = new Projects();
-
-        $project->name = $validatedData['name'];
-
-        $project->save();
-
-        return redirect('/all-todo');
+        Projects::create([
+            'name' => $validatedData['name']
+        ]);
+//        return response()->json([
+//            'status' => 200,
+//            'massage' => 'campaign created'
+//
+//            ]);
+       return redirect('/all-todo');
     }
 
     public function showAll()
     {
         $projects = Projects::all();
 
+//        return response()->json([
+//            'status' => 200,
+//            'projects' => $projects
+//        ]);
         return view('all-todo', ['projects' => $projects]);
     }
+
 
     public function showList($id)
     {
         $project = Projects::find($id);
+
+//        return response()->json([
+//            'id' => $project->id,
+//            'name' => $project->name
+//        ]);
         return view('project', ['project' => $project]);
     }
 
     public function updateList(Request $request, $id)
     {
         $list = ProjectList::find($id);
-        $list->done=$request->input('done');
-        $list->save();
+        $list -> done = $request -> input('done');
+        $list -> save();
         return back();
     }
 
-    public function storeList(Request $request)
+    public function storeList(ProjectList $projectList, Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|unique:projects|max:100'
+        $validatedData = $request -> validate([
+            'name' => 'required|unique:projects|max:15'
         ]);
-        $list = new ProjectList();
-        $list->name =  $validatedData['name'];
-        $list->done =0;
-        $list->project_id =$request->input('project_id') ;
-        $list->save();
+
+        $projectList -> name = $validatedData['name'];
+        $projectList -> done = 0;
+        $projectList -> project_id = $request -> input('project_id') ;
+        $projectList -> save();
         return back();
 
     }
@@ -67,9 +77,9 @@ class TodoController extends Controller
     {
 
         $list = ProjectList::find($id);
-        $list->delete();
-        $delList=$request->input('project_id');
-        return redirect('/project/'.$delList);
+        $list -> delete();
+        $delList = $request -> input('project_id');
+        return redirect('/project/' . $delList);
 
     }
 }
