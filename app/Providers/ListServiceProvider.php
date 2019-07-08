@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\ListService;
 use Illuminate\Support\ServiceProvider;
 
-class storeListServiseProvider extends ServiceProvider
+class ListServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -13,7 +14,9 @@ class storeListServiseProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(ListService::class, function ($app) {
+            return new ListService();
+        });
     }
 
     /**

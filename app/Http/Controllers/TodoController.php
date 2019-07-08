@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\ProjectList;
 use App\Projects;
+use App\Services\ListService;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
+    public $listService;
+
+    public function __construct()
+    {
+        $this->listService = new ListService();
+    }
+
     public function show()
     {
         return view('create-todo');
@@ -55,31 +63,25 @@ class TodoController extends Controller
     public function updateList(Request $request, $id)
     {
         $list = ProjectList::find($id);
-        $list -> done = $request -> input('done');
-        $list -> save();
+        $list->done = $request->input('done');
+        $list->save();
         return back();
     }
 
     public function storeList(ProjectList $projectList, Request $request)
     {
-        $validatedData = $request -> validate([
+        $validatedData = $request->validate([
             'name' => 'required|unique:projects|max:15'
         ]);
-
-        $projectList -> name = $validatedData['name'];
-        $projectList -> done = 0;
-        $projectList -> project_id = $request -> input('project_id') ;
-        $projectList -> save();
+        $this->listService->setList($projectList, $validatedData, $request);
         return back();
 
     }
     public function deleteList(Request $request, $id)
     {
 
-        $list = ProjectList::find($id);
-        $list -> delete();
-        $delList = $request -> input('project_id');
-        return redirect('/project/' . $delList);
+        $returnId = $this->listService->delList($request, $id);
+        return redirect('/project/' . $returnId);
 
     }
 }
