@@ -11,9 +11,9 @@ class TodoController extends Controller
 {
     public $listService;
 
-    public function __construct()
+    public function __construct(ListService $listService)
     {
-        $this->listService = new ListService();
+        $this->listService = $listService;
     }
 
     public function show()
@@ -29,23 +29,23 @@ class TodoController extends Controller
         Projects::create([
             'name' => $validatedData['name']
         ]);
-//        return response()->json([
-//            'status' => 200,
-//            'massage' => 'campaign created'
-//
-//            ]);
-       return redirect('/all-todo');
+        return response()->json([
+            'status' => 200,
+            'massage' => 'campaign created'
+
+            ]);
+//       return redirect('/all-todo');
     }
 
     public function showAll()
     {
         $projects = Projects::all();
 
-//        return response()->json([
-//            'status' => 200,
-//            'projects' => $projects
-//        ]);
-        return view('all-todo', ['projects' => $projects]);
+        return response()->json([
+            'status' => 200,
+            'projects' => $projects
+        ]);
+//        return view('all-todo', ['projects' => $projects]);
     }
 
 
@@ -53,11 +53,11 @@ class TodoController extends Controller
     {
         $project = Projects::find($id);
 
-//        return response()->json([
-//            'id' => $project->id,
-//            'name' => $project->name
-//        ]);
-        return view('project', ['project' => $project]);
+        return response()->json([
+            'id' => $project->id,
+            'name' => $project->name
+        ]);
+//        return view('project', ['project' => $project]);
     }
 
     public function updateList(Request $request, $id)
@@ -73,7 +73,8 @@ class TodoController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:projects|max:15'
         ]);
-        $this->listService->setList($projectList, $validatedData, $request);
+        $projectList = $this->listService->setList($projectList, $validatedData, $request);
+        $projectList->save();
         return back();
 
     }

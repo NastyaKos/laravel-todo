@@ -10,7 +10,6 @@ namespace App\Services;
 
 
 use App\ProjectList;
-use Illuminate\Http\Request;
 
 class ListService
 {
@@ -19,7 +18,7 @@ class ListService
         $projectList->name = $validatedData['name'];
         $projectList->done = 0;
         $projectList->project_id = $request->input('project_id') ;
-        $projectList->save();
+        return $projectList;
     }
 
     public function delList($request, $id)
