@@ -48,7 +48,6 @@ class TodoController extends Controller
 //        return view('all-todo', ['projects' => $projects]);
     }
 
-
     public function showList($id)
     {
         $project = Projects::find($id);
@@ -78,6 +77,7 @@ class TodoController extends Controller
         return back();
 
     }
+
     public function deleteList(Request $request, $id)
     {
 
