@@ -8,11 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    /** @test */
     public function check_main_page()
     {
         $response = $this->get('/create-todo');
@@ -31,4 +27,12 @@ class ProjectTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function test_showAll()
+    {
+        $response = $this->get('/all-todo');
+        $response->assertJson([
+            'status' => 200
+        ]);
+    }
 }
