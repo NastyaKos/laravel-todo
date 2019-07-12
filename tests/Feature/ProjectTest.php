@@ -25,6 +25,7 @@ class ProjectTest extends TestCase
             'id' => $project->id,
             'name' => $project->name
         ]);
+        $project->delete();
     }
 
     /** @test */
