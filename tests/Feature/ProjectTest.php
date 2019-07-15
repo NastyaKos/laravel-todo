@@ -8,16 +8,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
 {
-    /** @test */
-    public function check_main_page()
+    public function testCheckMainPage()
     {
         $response = $this->get('/create-todo');
 
         $response->assertStatus(200);
     }
 
-    /** @test */
-    public function store_project()
+    public function testStoreProject()
     {
         $project = factory('App\Projects')->create();
 
@@ -28,8 +26,7 @@ class ProjectTest extends TestCase
         $project->delete();
     }
 
-    /** @test */
-    public function test_showAll()
+    public function testShowAll()
     {
         $response = $this->get('/all-todo');
         $response->assertJson([
