@@ -8,15 +8,25 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListTest extends TestCase
 {
+//    public function testSetUp()
+//    {
+//        $this->createApplication();
+//    }
+//
+//    protected function setUp()
+//    {
+//        $this->calculator = new Calculator();
+//    }
+
     public function testShowList()
     {
         $project = factory('App\Projects')->create();
-        $response = $this->get('/project/'.$project->id);
+        $response = $this->get('/project/' . $project->id);
         $response->assertJson([
             'id' => $project->id,
             'name' => $project->name
         ]);
-        $project->delete();
+//        $project->delete();
     }
 
     public function testUpdateList()
@@ -31,7 +41,7 @@ class ListTest extends TestCase
             'name' => 'testUpdate'
         ]);
 
-        $projectList->delete();
+//        $projectList->delete();
     }
 
     public function testStoreList()
@@ -44,7 +54,7 @@ class ListTest extends TestCase
             'id' => $projectList->id,
             'name' => $projectList->name
         ]);
-        $projectList->delete();
+//        $projectList->delete();
     }
 
     public function testDeleteList()
@@ -56,7 +66,7 @@ class ListTest extends TestCase
         $this->assertDatabaseMissing('project_lists', [
             'id' => $projectList->id,
         ]);
-        $projectList->delete();
-        $project->delete();
+//        $projectList->delete();
+//        $project->delete();
     }
 }
