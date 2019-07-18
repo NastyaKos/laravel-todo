@@ -8,15 +8,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListTest extends TestCase
 {
-//    public function testSetUp()
-//    {
-//        $this->createApplication();
-//    }
-//
-//    protected function setUp()
-//    {
-//        $this->calculator = new Calculator();
-//    }
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:refresh');
+
+    }
 
     public function testShowList()
     {
@@ -60,7 +57,7 @@ class ListTest extends TestCase
     public function testDeleteList()
     {
         $project = factory('App\Projects')->create();
-        $projectList = factory('App\ProjectList')->create(['project_id'=>$project->id]);
+        $projectList = factory('App\ProjectList')->create(['project_id' => $project->id]);
         $projectList->delete();
 
         $this->assertDatabaseMissing('project_lists', [

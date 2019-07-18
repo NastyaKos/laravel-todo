@@ -8,6 +8,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:refresh');
+
+    }
+
     public function testCheckMainPage()
     {
         $response = $this->get('/create-todo');
@@ -25,7 +32,7 @@ class ProjectTest extends TestCase
         ]);
         $project->delete();
     }
-
+    
     public function testShowAll()
     {
         $response = $this->get('/all-todo');
