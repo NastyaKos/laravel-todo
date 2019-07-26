@@ -8,14 +8,30 @@ services:
     links:
       - php-fpm
     volumes:
-      - ./nginx/default:/etc/nginx/sites-available/lara-todo.loc.conf
-      - ./nginx/default:/etc/nginx/sites-enabled/lara-todo.loc.conf
-      - /var/log/nginx/error.log:/var/log/nginx/error.log
-      - /var/log/nginx/access.log:/var/log/nginx/access.log
+      - ./nginx/conf.d:/etc/nginx/sites-available/default
+      - ./nginx/conf.d:/etc/nginx/sites-enabled/default
+      - ./nginx/error.log:/var/log/nginx/error.log
+      - ./nginx/access.log:/var/log/nginx/access.log
 
   php-fpm:
-    image: php:fpm
+    build:
+      context: .
+      dockerfile: .php-fpm/Dockerfile
     ports:
       - "9000:9000"
     volumes:
-      - ./public:/var/www/lara-todo.loc/public
+      - /var/www/lara-todo.loc:/application
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=lara-todo
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+    ports:
+      - "3306:3306"
